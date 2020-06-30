@@ -1,0 +1,9 @@
+.showLife {
+  position: relative;
+  min-height: 100vh;
+  overflow-y: scroll;
+  background: #f4f5f5;
+}
+.showLife .content {
+  margin-top: 70px;
+}

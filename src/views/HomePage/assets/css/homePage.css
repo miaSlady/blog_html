@@ -1,0 +1,29 @@
+.homePage {
+  width: 100vw;
+  height: 100vh;
+  background: url("../img/cover.jpg") no-repeat;
+  background-size: 100vw 100vh;
+  padding: 1px;
+}
+.homePage .changeBox {
+  width: 400px;
+  height: 300px;
+  border-radius: 5px;
+  background: #fae3e1;
+  margin: 200px 50px;
+  display: flex;
+  align-items: center;
+}
+.homePage .changeBox ul {
+  width: 100%;
+}
+.homePage .changeBox ul li {
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  color: #ef7e92;
+}
+.homePage .changeBox ul li:hover {
+  color: #57aaeb;
+}

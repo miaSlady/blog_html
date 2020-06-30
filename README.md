@@ -1,29 +1,19 @@
-# nh_science_park
+#### 该项目讲解
+> 该项目分为三个页面（多页面）：1.前后台切换页  2.前端页面 3.后台页面
 
-## Project setup
-```
-npm install
-```
+##### 前后台切换页
+~~~
+可切换前后台页面
+~~~
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+##### 前端页面
+>博客展示页
+~~~
 
-### Compiles and minifies for production
-```
-npm run build
-```
+~~~
 
-### Run your tests
-```
-npm run test
-```
+##### 后台页面
+>博客后台页
+~~~
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+~~~
