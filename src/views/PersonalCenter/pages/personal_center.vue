@@ -26,15 +26,15 @@
       </a-form-model-item>
       <a-form-model-item label="头像上传" required>
         <a-upload
-          name="avatar"
+          name="uploadImg"
           list-type="picture-card"
           class="avatar-uploader"
           :show-upload-list="false"
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          :action="uploadUrl"
           :before-upload="beforeUpload"
           @change="handleChange"
         >
-          <img v-if="form.imageUrl" :src="form.imageUrl" alt="avatar" />
+          <img v-if="form.img" :src="form.img" alt="avatar" />
           <div v-else>
             <a-icon :type="loadingUploadImg ? 'loading' : 'plus'" />
             <div class="ant-upload-text">
@@ -43,16 +43,16 @@
           </div>
         </a-upload>
       </a-form-model-item>
-      <a-form-model-item label="github链接">
+      <a-form-model-item label="github链接" required>
         <a-input v-model="form.github" />
       </a-form-model-item>
-      <a-form-model-item label="微博链接">
+      <a-form-model-item label="微博链接" required>
         <a-input v-model="form.weibo" />
       </a-form-model-item>
-      <a-form-model-item label="微信链接">
+      <a-form-model-item label="微信链接" required>
         <a-input v-model="form.wechat" />
       </a-form-model-item>
-      <a-form-model-item label="qq链接">
+      <a-form-model-item label="qq链接" required>
         <a-input v-model="form.qq" />
       </a-form-model-item>
     </a-form-model> 
@@ -64,22 +64,25 @@
 </template>
 
 <script>
-function getBase64(img, callback) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
+import {GetUserinfo,SubmitUserinfo} from '../assets/js/getData'
+import {BASEURL} from '@/assets/js/config'
 export default {
   data (){
     return {
+      uploadUrl:BASEURL+'/upload/img',
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       form: {
         name: null,
         slogan: null,
         tags:[''],
-        imageUrl:null
-      },
+        imgurl:null,     
+        img:null,
+        github:null,
+        weibo:null,
+        wechat:null,
+        qq:null,
+      },//
       loadingUploadImg: false,
     };
   },
@@ -87,9 +90,36 @@ export default {
     /**
      * 表单
      */
+    //获取用户信息
+    getUserInfo(){
+      GetUserinfo().then(msg=>{
+        if(msg.code==200){
+          let data={...msg.data};
+          data.tags=data.tags ? data.tags.split(",") : [""];
+          data.img=data.imgurl ? BASEURL+data.imgurl : '';
+          this.form=data;
+        }
+      })
+    },
     //提交
     handleSubmit(){
-
+      // function aa(obj){
+      //   for(var i in obj){
+      //     if(i!='tags' && !obj[i])  return false
+      //     if(i=='tags' && !obj[i].length) return false
+      //   }
+      //   return true
+      // }
+      // if(!aa(this.form)) return this.$message.error("请填写必填项");
+      let params={...this.form};
+      params.tags=params.tags.join(",");
+      SubmitUserinfo({...params}).then(msg=>{
+        if(msg.code==200){
+          this.$message.success("提交成功");
+          this.getUserInfo();
+        }
+      })
+      
     },
     //标签（新增、删除）
     handleTags(i){
@@ -110,10 +140,15 @@ export default {
         return;
       }
       if (info.file.status === 'done') {
-        getBase64(info.file.originFileObj, imageUrl => {
-          this.form.imageUrl = imageUrl;
-          this.loadingUploadImg = false;
-        });
+        this.loadingUploadImg = false;
+        var response=info.file.response;
+        if(response.code==200){
+          this.form.imgurl=response.data.path;
+          this.form.img=BASEURL+this.form.imgurl;
+        }else{
+          this.$message.error("上传失败")
+        }
+        
       }
     },
     beforeUpload(file) {
@@ -128,7 +163,9 @@ export default {
       return isJpgOrPng && isLt2M;
     },
   },
-  mounted(){},
+  mounted(){
+    this.getUserInfo();
+  },
 }
 
 </script>

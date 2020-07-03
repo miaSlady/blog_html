@@ -1,8 +1,6 @@
 //接口前缀
-// export const BASEURL='https://customer.ytbig.cn/api';//线上
-// export const BASEURL='http://192.168.0.150:8090';//王宁磊
-// export const BASEURL='http://172.16.0.28:8090';//王帅
 export const BASEURL='http://127.0.0.1:3000';//自己的
+// export const IMGURL='http://localhost:80';//图片服务器地址
 
 //验证码
 export const CODEURL=BASEURL+'/login/code';

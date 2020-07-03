@@ -1,0 +1,9 @@
+.bibi {
+  padding: 20px;
+}
+.bibi .content {
+  min-height: 200px;
+  margin-bottom: 20px;
+  background: #fff;
+  border-radius: 5px;
+}

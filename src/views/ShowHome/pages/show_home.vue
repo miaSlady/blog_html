@@ -6,18 +6,18 @@
       <router-view/>
     </div>
     <div class="right">
-      <p class="avatar" />
-      <p class="name">米牙</p>
-      <p class="slogan">专注前端开发吼吼</p>
+      <p class="avatar" :style="{backgroundImage:'url('+userInfo.imgurl+')'}"/>
+      <p class="name">{{userInfo.name}}</p>
+      <p class="slogan">{{userInfo.slogan}}</p>
       <ul class="tags">
-        <li v-for="(v,i) in tags" :key="i">{{v}}</li>
+        <li v-for="(v,i) in userInfo.tags" :key="i">{{v}}</li>
       </ul>
       <div class="socialAccount">
         <span class="line"></span>
         <span class="text">社交账号</span>
       </div>
       <ul class="iconList">
-        <li v-for="(v,i) in accountList" :key="i" @click="jump(link)" >
+        <li v-for="(v,i) in accountList" :key="i" @click="jump(v.link)" >
           <a-tooltip placement="top">
             <template slot="title">
               <span>{{v.value}}</span>
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import {BASEURL} from '@/assets/js/config'
+import {GetUserinfo} from '../assets/js/show_home_req.js'
 import Header from '@/components/show_home/header'
 export default {
   components:{
@@ -43,37 +45,65 @@ export default {
   },
   data (){
     return {
-      tags:['嘻嘻','吃货','臭美','你猜','愉快玩耍','猜猜猜','pljj','sqgg','咻咻咻','技术咖'],
       accountList:[
         {
           icon:'github',
+          name:'github:',
+          field:'github',
           value:'github:巴拉拉巴拉',
           link:'balabala'
         },
         {
           icon:'weibo-circle',
+          name:'微博:',
+          field:'weibo',
           value:'微博:巴拉拉巴拉',
           link:'balabala'
         },
         {
           icon:'wechat',
+          name:'微信:',
+          field:'wechat',
           value:'微信:巴拉拉巴拉',
           link:'balabala'
         },
         {
           icon:'qq',
+          name:'qq:',
+          field:'qq',
           value:'qq:巴拉拉巴拉',
           link:'balabala'
         },
       ],
+      userInfo:{},
       
     };
   },
   methods:{
-
+    //获取用户信息
+    getUserinfo(){
+      GetUserinfo().then(msg=>{
+        if(msg.code==200){
+          let data=msg.data,accountList=this.accountList;
+          data.tags=data.tags.split(",");
+          data.imgurl=BASEURL+data.imgurl;
+          accountList.forEach((v,i)=>{
+            var link=data[v.field]
+            v.value=v.name+'\n'+link;
+            v.link=link;
+          })
+          this.userInfo=data;
+          this.accountList=accountList;
+        }
+      })
+    },
+    //页面跳转
+    jump(link){
+      if(link) window.open(link); 
+    },
   },
   mounted(){
-
+    this.getUserinfo();
   },
 }
 
