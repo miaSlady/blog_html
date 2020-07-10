@@ -37,8 +37,8 @@ module.exports = {
     open: false, //配置自动启动浏览器
     hot:true,//配置热更新
     compress: true,
-    index:'/backgroundPage.html',//启动项目默认跳转页面地址
-    // index:'/showPage.html',//启动项目默认跳转页面地址
+    // index:'/backgroundPage.html',//启动项目默认跳转页面地址
+    index:'/showPage.html',//启动项目默认跳转页面地址
     // proxy: {        //跨域代理
     //   '/api': {
     //     target: 'http://127.0.0.1:3000/',        //baseURL

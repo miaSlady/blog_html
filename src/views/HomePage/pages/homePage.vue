@@ -1,5 +1,6 @@
 <template>
 <div class="homePage">
+  <div class="bg"></div>
   <div class="changeBox">
     <ul>
       <li @click="jumpPage(1)">个人博客展示页</li>

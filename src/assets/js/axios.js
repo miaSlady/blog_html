@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {BASEURL} from './config.js'
 import {message} from 'ant-design-vue'
+const qs=require("qs");
 // axios.defaults.withCredentials = true;
 // axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded;charset=utf-8";
 axios.interceptors.request.use(
@@ -9,7 +10,7 @@ axios.interceptors.request.use(
     let token = sessionStorage.getItem('token')
     if (token) {
       config.headers.token = token;
-    }
+    }    
     return config;
   },
   error => {
@@ -17,19 +18,25 @@ axios.interceptors.request.use(
   });
 
 export let myAxios = (method, url, params) => {
+  let request= method!='get' ?{
+    method: method,
+    url: BASEURL + url,
+    data:params,
+  }:{
+    methods: method,
+    url: BASEURL + url,
+    params ,
+  };
+  console.log('请求',request,);
   return new Promise((resolve, reject) => {
-    axios({
-      method: method,
-      url: BASEURL + url,
-      data: params,
-    })
+    axios(request)
       .then(function (response) {
         if (response.data.code == '401') {
           sessionStorage.clear();
           location.href = "/#/login"
           return;
         }
-        if(response.data.success){
+        if(response.data.code==200){
           resolve(response.data);
         }else{
           message.open({

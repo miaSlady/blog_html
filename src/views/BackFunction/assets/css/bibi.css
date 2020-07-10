@@ -6,4 +6,34 @@
   margin-bottom: 20px;
   background: #fff;
   border-radius: 5px;
+  padding: 20px;
+}
+.bibi .content .btnBox .btn {
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.bibi .content .table .img {
+  width: 50px;
+  height: 50px;
+  display: block;
+}
+.bibi .content .table .marginRight {
+  margin-right: 10px;
+}
+.bibi .content .pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 50px;
+}
+.avatar-uploader > .ant-upload {
+  width: 128px;
+  height: 128px;
+}
+.ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: #999;
+}
+.ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
 }
