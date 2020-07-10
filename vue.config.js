@@ -19,7 +19,7 @@ module.exports = {
 	//放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
 	assetsDir: 'static',
   // outputDir: 在npm run build时 生成文件的目录 type:string, default:'dist'
-  outputDir: 'userDist',
+  outputDir: 'blogDist',
   // pages:{ type:Object,Default:undfind }
 	//生产环境是否生成 sourceMap 文件，一般情况不建议打开
   productionSourceMap: false,
